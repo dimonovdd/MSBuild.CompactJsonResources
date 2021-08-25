@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<OutputType>Exe</OutputType>
+		<TargetFramework>net5.0</TargetFramework>
+		<UseAppHost>false</UseAppHost>
+		<EnableCompactJson>true</EnableCompactJson>
+	</PropertyGroup>
+	<ItemGroup>
+		<JsonEmbeddedResource Include="inProject.json" />
+		<JsonEmbeddedResource Include="ProjectResFolder\inProjectFolder.json" />
+		<JsonEmbeddedResource Include="..\RelativeResFolder\*.json" />
+		<JsonEmbeddedResource Include="..\RelativeResFolder2\*.json" Link="ProjectResFolder\%(Filename)WithLink%(Extension)" />
+		<JsonEmbeddedResource Include="/Users/dmitriidimov/Documents/projects/TestMSBuildTasks/TestMSBuildTasks/AbsoluteResFolder/absolutePath.json" />
+	</ItemGroup>
+	<!--<ItemGroup>
+		<PackageReference Include="CompactJson" Version="1.0.0" />
+	</ItemGroup>-->
+	<Import Project="..\CompactJson\bin\$(Configuration)\netstandard2.1\CompactJson.targets" />
+</Project>

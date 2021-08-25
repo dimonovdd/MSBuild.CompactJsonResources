@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	<ItemGroup>
+		<AvailableItemName Include="JsonEmbeddedResource" />
+	</ItemGroup>
+	<PropertyGroup>
+		<CompactJsonTaskTempPath>$(MSBuildProjectExtensionsPath)$(Configuration)\$(TargetFramework)\CompactJsonTask</CompactJsonTaskTempPath>
+		<CompactJsonTaskLogTag>CompactJsonTaskMessage - </CompactJsonTaskLogTag> 
+	</PropertyGroup>
+	<UsingTask AssemblyFile="$(MSBuildThisFileDirectory)$(MSBuildThisFileName).dll" TaskName="$(MSBuildThisFileName).CompactJsonTask" />
+	<Target Name="CompactJson" BeforeTargets="ResolveReferences">
+		<PropertyGroup>
+			<EnableCompactJson Condition="'$(EnableCompactJson.Trim().ToLowerInvariant())' == 'true'">true</EnableCompactJson>
+			<EnableCompactJson Condition="'$(EnableCompactJson)' != 'true'">false</EnableCompactJson>
+		</PropertyGroup>
+
+		<Message Text="$(CompactJsonTaskLogTag) EnableCompactJson = $(EnableCompactJson)" />
+		<RemoveDir Directories="$(CompactJsonTaskTempPath)" Condition="Exists ( '$(CompactJsonTaskTempPath) ' )" />
+
+		<CompactJsonTask JsonFiles="@(JsonEmbeddedResource)" Condition="'$(EnableCompactJson)'=='true'" TempOutputPath="$(CompactJsonTaskTempPath)" LogTag="$(CompactJsonTaskLogTag)">
+			<Output TaskParameter="OutputJsonFiles" ItemName="OutputJsonEmbeddedResource" />
+		</CompactJsonTask>
+
+		<ItemGroup >
+			<EmbeddedResource Include="@(JsonEmbeddedResource)" Condition="'$(EnableCompactJson)'=='false'"/>
+			<EmbeddedResource Include="@(OutputJsonEmbeddedResource)" Condition="'$(EnableCompactJson)'=='true'"/>
+		</ItemGroup>
+	</Target>
+</Project>
