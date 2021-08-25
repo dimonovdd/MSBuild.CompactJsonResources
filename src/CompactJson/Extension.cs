@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.Build.Framework;
 
-namespace CompactJson
+namespace MSBuild.CompactJsonResources
 {
     public static class Extension
     {

@@ -5,7 +5,7 @@ using System.Text.Json;
 using Microsoft.Build.Framework;
 using Microsoft.Build.Utilities;
 
-namespace CompactJson
+namespace MSBuild.CompactJsonResources
 {
     public class JsonFile
     {

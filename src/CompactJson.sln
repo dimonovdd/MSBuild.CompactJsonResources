@@ -5,7 +5,7 @@ VisualStudioVersion = 25.0.1700.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestMSBuildTasks", "TestMSBuildTasks\TestMSBuildTasks.csproj", "{5A5AFDCA-8928-4C5F-8E5E-D8877487DFA9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CompactJson", "CompactJson\CompactJson.csproj", "{C27A7EE2-AE76-4994-8E35-510BF85E4C30}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MSBuild.CompactJsonResources", "CompactJson\MSBuild.CompactJsonResources.csproj", "{C27A7EE2-AE76-4994-8E35-510BF85E4C30}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -14,7 +14,7 @@
 		<JsonEmbeddedResource Include="/Users/dmitriidimov/Documents/projects/TestMSBuildTasks/TestMSBuildTasks/AbsoluteResFolder/absolutePath.json" />
 	</ItemGroup>
 	<!--<ItemGroup>
-		<PackageReference Include="CompactJson" Version="1.0.0" />
+		<PackageReference Include="MSBuild.CompactJsonResources" Version="1.0.0-preview1" />
 	</ItemGroup>-->
-	<Import Project="..\CompactJson\bin\$(Configuration)\netstandard2.1\CompactJson.targets" />
+	<Import Project="..\CompactJson\bin\$(Configuration)\netstandard2.1\MSBuild.CompactJsonResources.targets" />
 </Project>

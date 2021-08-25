@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Microsoft.Build.Framework;
 using Microsoft.Build.Utilities;
 
-namespace CompactJson
+namespace MSBuild.CompactJsonResources
 {
     public class CompactJsonTask : Task
     {
