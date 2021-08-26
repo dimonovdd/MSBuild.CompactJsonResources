@@ -4,7 +4,7 @@
 
 [![NuGet Badge](https://img.shields.io/nuget/vpre/MSBuild.CompactJsonResources)](https://www.nuget.org/packages/MSBuild.CompactJsonResources/) [![license](https://img.shields.io/github/license/dimonovdd/MSBuild.CompactJsonResources)](https://github.com/dimonovdd/MSBuild.CompactJsonResources/blob/main/LICENSE) [![fuget.org](https://www.fuget.org/packages/MSBuild.CompactJsonResources/badge.svg)](https://www.fuget.org/packages/MSBuild.CompactJsonResources)
 
-Often, Json files are added to the project as one line for reduce a size of a build. It is not very convenient to read and track changes through version control systems. This package removes whitespaces, trailing commas and comments from builds without changing the source files.
+Often, Json files are added to a project as one line to reduce the size of the build. Such files are uncomfortable to read and track changes through version control systems. This package removes whitespaces, trailing commas and comments from the builds without changing the beautiful Json source files by adding their single-line copies.
 
 ```json
 {
