@@ -12,6 +12,7 @@ namespace MSBuild.CompactJsonResources
         const string definingProjectFullPath = "DefiningProjectFullPath";
         const string definingProjectName = "DefiningProjectName";
         const string definingProjectExtension = "DefiningProjectExtension";
+        const char dotChar = '.';
 
         readonly ITaskItem item;
         readonly string tempOutputPath;
@@ -53,21 +54,23 @@ namespace MSBuild.CompactJsonResources
 
         public TaskItem WriteCompactTempFile()
         {
-            using var fs = File.OpenRead(FullPath);
-            using var jDoc = JsonDocument.Parse(fs, new JsonDocumentOptions { AllowTrailingCommas = true, CommentHandling = JsonCommentHandling.Skip });
+            using var frs = File.OpenRead(FullPath);
+            using var jDoc = JsonDocument.Parse(frs,
+                new JsonDocumentOptions { AllowTrailingCommas = true, CommentHandling = JsonCommentHandling.Skip });
 
             var directory = Path.GetDirectoryName(TempFullPath);
+
             if (!Directory.Exists(directory))
                 Directory.CreateDirectory(directory);
 
             if (File.Exists(TempFullPath))
                 File.Delete(TempFullPath);
 
-            using var stream = File.OpenWrite(TempFullPath);
-            using var writer = new Utf8JsonWriter(stream);
+            using var fws = File.OpenWrite(TempFullPath);
+            using var writer = new Utf8JsonWriter(fws);
             jDoc.WriteTo(writer);
             writer.Flush();
-            stream.Flush();
+            fws.Flush();
 
             return GetTaskItem();
         }
@@ -75,12 +78,12 @@ namespace MSBuild.CompactJsonResources
         public override string ToString() => FullPath;
 
         TaskItem GetTaskItem()
-            => new TaskItem(TempFullPath, new Dictionary<string, string>
+            => new(TempFullPath, new Dictionary<string, string>
             {
                 { nameof(Link), Link },
                 { nameof(FullPath), TempFullPath },
-                { nameof(Filename), Filename },
-                { nameof(Extension), Extension },
+                { nameof(Filename), Path.GetFileNameWithoutExtension(TempFullPath) },
+                { nameof(Extension), Path.GetExtension(TempFullPath) },
                 { nameof(DefiningProjectDirectory), DefiningProjectDirectory },
                 { definingProjectFullPath, GetMetadata(definingProjectFullPath) },
                 { definingProjectName, GetMetadata(definingProjectName) },
@@ -91,24 +94,41 @@ namespace MSBuild.CompactJsonResources
 
         void Verify()
         {
-            if (string.IsNullOrWhiteSpace(DefiningProjectDirectory) || string.IsNullOrWhiteSpace(FullPath))
-                throw new Exception();
+            if (DefiningProjectDirectory.IsEmpty() || FullPath.IsEmpty())
+                throw new KeyNotFoundException($"{nameof(DefiningProjectDirectory)} or {nameof(FullPath)} not found in {item.ToString(null)}");
 
-            if (string.IsNullOrWhiteSpace(Link))
-                SetLink();
+            if (!File.Exists(FullPath))
+                throw new FileNotFoundException(FullPath);
 
-            if (string.IsNullOrWhiteSpace(Link))
-                throw new Exception();
+            if (!Directory.Exists(DefiningProjectDirectory))
+                throw new DirectoryNotFoundException(DefiningProjectDirectory);
+
+            VerifyFileNameWithExtension();
+
+            if (Link.IsEmpty())
+                Link = FullPath.StartsWith(DefiningProjectDirectory)
+                    ? FullPath.Replace(DefiningProjectDirectory, string.Empty)
+                    : $"{Filename}{Extension}";
+
+            if (Link.IsEmpty())
+                throw new ArgumentException($"The relative {nameof(Link)} of the file location in the project could not be determined in {item.ToString(null)}");
 
             TempFullPath = Path.Combine(tempOutputPath, Link);
         }
 
-        void SetLink()
+        void VerifyFileNameWithExtension()
         {
-            var locatedInProject = FullPath.StartsWith(DefiningProjectDirectory);
-            Link = locatedInProject
-                ? FullPath.Replace(DefiningProjectDirectory, string.Empty)
-                : $"{Filename}{Extension}";
+            if (Filename.IsEmpty())
+                Filename = Path.GetFileNameWithoutExtension(FullPath);
+
+            if (Extension.IsEmpty())
+                Extension = Path.GetExtension(FullPath);
+
+            if (!Extension.IsEmpty() && !Extension.StartsWith(dotChar))
+                Extension = dotChar + Extension;
+
+            if (Filename.IsEmpty() && Extension.IsEmpty())
+                throw new ArgumentException($"The {nameof(Filename)} and {nameof(Extension)} could not be determined in {item.ToString(null)}");
         }
     }
 }

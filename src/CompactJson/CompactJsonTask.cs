@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Microsoft.Build.Framework;
 using Microsoft.Build.Utilities;
+using static Microsoft.Build.Framework.MessageImportance;
 
 namespace MSBuild.CompactJsonResources
 {
@@ -19,42 +21,38 @@ namespace MSBuild.CompactJsonResources
 
         public override bool Execute()
         {
-            LogMessage($"{nameof(TempOutputPath)}: {TempOutputPath}");
+            LogMessage($"{nameof(TempOutputPath)}: {TempOutputPath}", High);
             try
             {
                 if (JsonFiles?.Length > 0)
                     OutputJsonFiles = ParseAndCopyFiles(JsonFiles)?.ToArray();
                 else
-                    Log.LogMessage($"{nameof(JsonFiles)} is null or empty");
+                    LogMessage($"{nameof(JsonFiles)} is null or empty");
 
             }
             catch (Exception ex)
             {
-                LogMessage(ex.StackTrace);
-                Log.LogErrorFromException(ex);
+                Log.LogErrorFromException(ex, true);
                 return false;
             }
             
             return true;
         }
 
-
-        List<ITaskItem> ParseAndCopyFiles(ITaskItem[] items)
+        IEnumerable<ITaskItem> ParseAndCopyFiles(ITaskItem[] items)
         {
-            var output = new List<ITaskItem>();
             foreach(var item in items)
             {
-                LogMessage(item.ToString("Original File"));
+                LogMessage(item.ToString("Original File"), Low);
                 var json = new JsonFile(item, TempOutputPath);
                 LogMessage($"Temp File Full Path: {json.TempFullPath}");
                 var outputItem = json.WriteCompactTempFile();
-                LogMessage(outputItem.ToString("Temp File"));
-                output.Add(outputItem);
+                LogMessage(outputItem.ToString("Temp File"), Low);
+                yield return outputItem;
             }
-            return output;
         }
-
        
-        void LogMessage(string mess) => Log.LogMessage($"{LogTag}{mess}");
+        void LogMessage(string mess, MessageImportance importance = Normal)
+            => Log.LogMessage(importance, $"{LogTag}{mess}");
     }
 }
