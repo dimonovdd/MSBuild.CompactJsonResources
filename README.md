@@ -36,6 +36,6 @@ Often, Json files are added to a project as one line to reduce the size of the b
   <JsonEmbeddedResource Include="data.json" />
 </ItemGroup>
 <ItemGroup>
-  <PackageReference Include="MSBuild.CompactJsonResources" Version="1.0.0-preview1" PrivateAssets="all"/>
+  <PackageReference Include="MSBuild.CompactJsonResources" Version="1.0.0" PrivateAssets="all"/>
 </ItemGroup>
 ```
