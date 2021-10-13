@@ -25,7 +25,7 @@ Often, Json files are added to a project as one line to reduce the size of the b
 ## Getting started
 
 1) Add reference for this package.
-2) Set `EnableCompactJson` property to `true.` (When the value is `false` the files data are not changed)
+2) Set `EnableCompactJson` property to `true`. (When the value is `false` the files data are not changed)
 3) Just use `JsonEmbeddedResource` as `EmbeddedResource`.
 
 ```xml
