@@ -54,24 +54,31 @@ namespace MSBuild.CompactJsonResources
 
         public TaskItem WriteCompactTempFile()
         {
-            using var frs = File.OpenRead(FullPath);
-            using var jDoc = JsonDocument.Parse(frs,
-                new JsonDocumentOptions { AllowTrailingCommas = true, CommentHandling = JsonCommentHandling.Skip });
+            try
+            {
+                using var frs = File.OpenRead(FullPath);
+                using var jDoc = JsonDocument.Parse(frs,
+                    new JsonDocumentOptions { AllowTrailingCommas = true, CommentHandling = JsonCommentHandling.Skip });
 
-            var directory = Path.GetDirectoryName(TempFullPath);
+                var directory = Path.GetDirectoryName(TempFullPath);
 
-            if (!Directory.Exists(directory))
-                Directory.CreateDirectory(directory);
+                if (!Directory.Exists(directory))
+                    Directory.CreateDirectory(directory);
 
-            if (File.Exists(TempFullPath))
-                File.Delete(TempFullPath);
+                if (File.Exists(TempFullPath))
+                    File.Delete(TempFullPath);
 
-            using var fws = File.OpenWrite(TempFullPath);
-            using var writer = new Utf8JsonWriter(fws);
-            jDoc.WriteTo(writer);
-            writer.Flush();
-            fws.Flush();
-
+                using var fws = File.OpenWrite(TempFullPath);
+                using var writer = new Utf8JsonWriter(fws);
+                jDoc.WriteTo(writer);
+                writer.Flush();
+                fws.Flush();
+            }
+            catch(Exception ex)
+            {
+                throw new CompactJsonException(FullPath, ex);
+            }
+            
             return GetTaskItem();
         }
 
