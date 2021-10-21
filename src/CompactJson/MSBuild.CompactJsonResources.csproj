@@ -10,7 +10,7 @@
 
 		<PackageId>MSBuild.CompactJsonResources</PackageId>
 		<PackageTags>MSBuild, Json</PackageTags>
-		<Version>1.0.0</Version>
+		<Version>1.0.1-preview1</Version>
     <Authors>dimonovdd</Authors>
     <Owners>dimonovdd</Owners>
     <Description>Compact Json data by removing whitespaces before building</Description>
