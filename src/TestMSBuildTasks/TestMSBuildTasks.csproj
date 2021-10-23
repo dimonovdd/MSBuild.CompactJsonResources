@@ -4,7 +4,7 @@
 		<OutputType>Exe</OutputType>
 		<TargetFramework>net5.0</TargetFramework>
 		<UseAppHost>false</UseAppHost>
-		<EnableCompactJson>false</EnableCompactJson>
+		<EnableCompactJson>true</EnableCompactJson>
 	</PropertyGroup>
 	<ItemGroup>
 		<JsonEmbeddedResource Include="inProject.json" />
@@ -14,7 +14,7 @@
 		<JsonEmbeddedResource Include="/Users/dmitriidimov/Documents/projects/TestMSBuildTasks/TestMSBuildTasks/AbsoluteResFolder/absolutePath.json" />
 	</ItemGroup>
 	<ItemGroup>
-		<PackageReference Include="MSBuild.CompactJsonResources" Version="1.0.0" PrivateAssets="all"/>
+		<PackageReference Include="MSBuild.CompactJsonResources" Version="1.0.1" PrivateAssets="all"/>
 	</ItemGroup>
 	<!--<Import Project="..\CompactJson\bin\$(Configuration)\netstandard2.1\MSBuild.CompactJsonResources.targets" />-->
 </Project>
