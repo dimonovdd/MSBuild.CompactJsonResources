@@ -22,7 +22,7 @@
 	<ItemGroup>
 		<PackageReference Include="Microsoft.Build.Framework" Version="16.11.0" PrivateAssets="all" />
 		<PackageReference Include="Microsoft.Build.Utilities.Core" Version="16.11.0" PrivateAssets="all" />
-		<PackageReference Include="System.Text.Json" Version="5.0.2" GeneratePathProperty="true" PrivateAssets="all" />
+		<PackageReference Include="System.Text.Json" Version="4.7.0" PrivateAssets="all" />
 	</ItemGroup>
 	<ItemGroup>
     <None Include="..\..\LICENSE" PackagePath="" Pack="true" />
@@ -31,14 +31,7 @@
 	</ItemGroup>
 	<Target Name="IncludeDll" AfterTargets="AfterBuild">
 		<ItemGroup>
-			<None Include="$(PkgSystem_Text_Json)/lib/netstandard2.0/System.Text.Json.dll" Visible="False" Pack="True" PackagePath="buildTransitive;build" CopyToOutputDirectory="Always" CopyToPublishDirectory="Always" />
 			<None Include="$(OutputPath)**\*" Pack="True" Visible="False" PackagePath="buildTransitive;build" CopyToOutputDirectory="Always" CopyToPublishDirectory="Always" />
 		</ItemGroup>
 	</Target>
-
-	<Target Name="DisplayMessages" AfterTargets="AfterBuild">
-    <Message Text="PkgSystem_Text_Json = PkgSystem_Text_Json" />
-
-    <Message Text="PkgSystem_Text_Json = $(PkgSystem_Text_Json)" />
-  </Target>
 </Project>
