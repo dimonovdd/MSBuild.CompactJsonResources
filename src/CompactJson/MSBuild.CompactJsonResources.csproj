@@ -10,7 +10,7 @@
 
 		<PackageId>MSBuild.CompactJsonResources</PackageId>
 		<PackageTags>MSBuild, Json</PackageTags>
-		<Version>1.0.1</Version>
+		<Version>1.0.2</Version>
     <Authors>dimonovdd</Authors>
     <Owners>dimonovdd</Owners>
     <Description>Compact Json data by removing whitespaces before building</Description>
@@ -22,7 +22,7 @@
 	<ItemGroup>
 		<PackageReference Include="Microsoft.Build.Framework" Version="16.11.0" PrivateAssets="all" />
 		<PackageReference Include="Microsoft.Build.Utilities.Core" Version="16.11.0" PrivateAssets="all" />
-		<PackageReference Include="System.Text.Json" Version="5.0.2" PrivateAssets="all" />
+		<PackageReference Include="System.Text.Json" Version="4.7.0" PrivateAssets="all" />
 	</ItemGroup>
 	<ItemGroup>
     <None Include="..\..\LICENSE" PackagePath="" Pack="true" />
