@@ -12,7 +12,7 @@ namespace MSBuild.CompactJsonResources
         const string definingProjectFullPath = "DefiningProjectFullPath";
         const string definingProjectName = "DefiningProjectName";
         const string definingProjectExtension = "DefiningProjectExtension";
-        const char dotChar = '.';
+        const string dot = ".";
 
         readonly ITaskItem item;
         readonly string tempOutputPath;
@@ -131,8 +131,8 @@ namespace MSBuild.CompactJsonResources
             if (Extension.IsEmpty())
                 Extension = Path.GetExtension(FullPath);
 
-            if (!Extension.IsEmpty() && !Extension.StartsWith(dotChar))
-                Extension = dotChar + Extension;
+            if (!Extension.IsEmpty() && !Extension.StartsWith(dot))
+                Extension = dot + Extension;
 
             if (Filename.IsEmpty() && Extension.IsEmpty())
                 throw new ArgumentException($"The {nameof(Filename)} and {nameof(Extension)} could not be determined in {item.ToString(null)}");
