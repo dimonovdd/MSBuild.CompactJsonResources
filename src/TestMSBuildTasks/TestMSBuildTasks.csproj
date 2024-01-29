@@ -16,5 +16,5 @@
 	<ItemGroup>
 		<PackageReference Include="MSBuild.CompactJsonResources" Version="1.0.2" PrivateAssets="all"/>
 	</ItemGroup>
-	<!--<Import Project="..\CompactJson\bin\$(Configuration)\netstandard2.1\MSBuild.CompactJsonResources.targets" />-->
+	<!--<Import Project="..\CompactJson\bin\$(Configuration)\netstandard2.0\MSBuild.CompactJsonResources.targets" />-->
 </Project>
